@@ -8,16 +8,20 @@ module.exports = {
 
 async function insert(animal) {
 
-    db('animals').insert()
+    return db('animals')
+        .insert(animal, 'id')
+        .then(([id]) => {
+            return findById(id)
+        })
  
 }
-
 
 
 function remove(id) {
   return null;
 }
 
+
 function findById(id) {
-    return db('hobbits').where({ id }).first()
+    return db('animals').where({ id }).first()
   }
