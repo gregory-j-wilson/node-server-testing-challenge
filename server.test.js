@@ -7,7 +7,7 @@ const db = require('./connection')
 
 describe('server operations', () => {
 
-    describe('POST /animals', () => {
+    describe('POST /animals', () => { 
 
 
         it('should return HTTP status code 201 when passed correct data', () => {
@@ -21,10 +21,17 @@ describe('server operations', () => {
 
         it('should insert new animal into the database', async () => {
 
-            const res = await supertest(server).post('/animals')
-                .send({ animal_name: 'Kool Kangaroo' })
+            return supertest(server)
+                .post('/animals')
+                .send({ animal_name: 'Delightful Dog' })
+                .then(res => {
+                    expect(res.body.data.animal_name).toBe('Delightful Dog')
+                })
 
-                expect(res.body.data.animal_name).toBe('Kool Kangaroo')
+            // const res = await supertest(server).post('/animals')
+            //     .send({ animal_name: 'Kool Kangaroo' })
+
+            //     expect(res.body.data.animal_name).toBe('Kool Kangaroo')
         })
 
     })
@@ -34,7 +41,7 @@ describe('server operations', () => {
 
         it('should return HTTP status code 200 when item deleted', () => {
             return supertest(server)
-                .delete('/animals/3')
+                .delete('/animals/1')
                 .then(res => {
                     expect(res.status).toBe(200)
                 })
@@ -42,8 +49,8 @@ describe('server operations', () => {
 
         it(`should return message "Animal deleted!" when item deleted`, async () => {
 
-            return supertest(server)
-                .delete('/animals/4') 
+            return supertest(server) 
+                .delete('/animals/2') 
                 .then(res => {
                     console.log(res.body)
                     expect(res.body.message).toBe('Animal deleted!')
