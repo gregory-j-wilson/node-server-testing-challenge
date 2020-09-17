@@ -3,7 +3,17 @@ const db = require('./connection');
 module.exports = {
   insert,
   remove,
-  findById
+  findById,
+  find
+}
+
+
+//---------------------------------------------
+
+function find() {
+
+    return db('animals')
+    
 }
 
 async function insert(animal) {
@@ -18,8 +28,11 @@ async function insert(animal) {
 
 
 function remove(id) {
-  return null;
+    return db('animals').where({ id }).del();
 }
+
+
+//--------------------------------------
 
 
 function findById(id) {
